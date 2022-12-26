@@ -18,11 +18,11 @@ export default function MediumCarousel({playlists, type}){
                                    {
                                      playlists?.map((pl, i)=>{
                                          return (
-                                            <Slide index={i}>
+                                            <Slide key={i} index={i}>
                                             {type == 0 ? (
-                                                    <RecentlyPlayed preview={pl?.track?.preview_urls ? true : null}  key={pl?.id} image={pl?.track?.album?.images[0].url} pl={pl?.track}/>
+                                                    <RecentlyPlayed preview={pl?.track?.preview_urls ? true : null}  key={i} image={pl?.track?.album?.images[0].url} pl={pl?.track}/>
                                                 ) : (
-                                                    <NewRelease key={pl?.id} pl={pl}/>
+                                                    <NewRelease key={i} pl={pl}/>
                                                 )}
                                         </Slide>
                                          )
