@@ -27,7 +27,7 @@ export default function Login({providers}){
                     providers && Object.values(providers).map((provider, key)=>{
                         return(
                             <a key={key}>
-                            <button onClick={()=>{signIn(provider.id, {callbackUrl:'https://spotify-miniclone.netlify.app/'} )}} className="btn lg:mt-12 mt-6 btn-wide bg-green-500 hover:bg-green-600 text-white ">LOGIN WITH {provider.name}</button>
+                            <button onClick={()=>{signIn(provider.id, {callbackUrl:'https://spotify-clone-souritra.netlify.app/'} )}} className="btn lg:mt-12 mt-6 btn-wide bg-green-500 hover:bg-green-600 text-white ">LOGIN WITH {provider.name}</button>
                             </a>
                         )
                     })
