@@ -11,7 +11,7 @@ export async function middleware(req){
 
     if(!token && pathname!== "/login"){
 
-      return NextResponse.redirect('https://spotify-miniclone.netlify.app/login')
+      return NextResponse.redirect('https://spotify-clone-souritra.netlify.app/login')
     }
 }
 
