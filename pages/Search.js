@@ -18,6 +18,7 @@ export default function Search(){
     const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState)
     const [data, setData] = useState([])
     const spotifyAPI = useSpotify()
+    
 
     useEffect(()=>{
         if(spotifyAPI?.getAccessToken()){
