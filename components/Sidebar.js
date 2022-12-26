@@ -1,8 +1,8 @@
-import {HomeIcon, MagnifyingGlassIcon , MusicalNoteIcon, PlusCircleIcon, HeartIcon} from "@heroicons/react/24/outline"
+import {HomeIcon, MagnifyingGlassIcon, PlusCircleIcon} from "@heroicons/react/24/outline"
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import { useRecoilState } from "recoil"
-import { playlistIdState } from "../atoms/stateAtom"
+import { userPlaylists } from "../atoms/stateAtom"
 import useSpotify from "../hooks/useSpotify"
 import PlaylistTab from "./PlaylistTab"
 import SidebarTab from "./SidebarTab"
@@ -13,13 +13,14 @@ export default function Sidebar(){
 
     const spotifyAPI = useSpotify()
     const {data:session, status} = useSession()
-    const [playlists, setPlaylists] = useState([])
+    const [userPlaylistArray, setUserPlaylists] = useRecoilState(userPlaylists)
     
     useEffect(()=>{
  
         if(spotifyAPI.getAccessToken()){
             spotifyAPI.getUserPlaylists().then((data)=>{
-                setPlaylists(data?.body?.items)
+                
+                setUserPlaylists(data?.body?.items);
             })
         }
 
@@ -41,11 +42,11 @@ export default function Sidebar(){
 
         <hr className="mt-8"/>
         {/* <button className="text-white" onClick={()=>{signOut()}}>Log out</button> */}
-        <h2 className="text-white ml-6 mt-4 text-md font-bold">Playlists</h2>
+        <h2 className="text-white ml-6 mr-32 mt-4 text-md font-bold">Playlists</h2>
          {
-            playlists.map(playlist=>{
+            userPlaylistArray?.map(playlist=>{
                 return(
-                    <PlaylistTab key={playlist?.id} pl={playlist? playlist : ""}/>
+                    <PlaylistTab key={playlist?.id} pl={playlist}/>
                 )
             })
          }

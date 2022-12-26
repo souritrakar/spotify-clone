@@ -9,8 +9,6 @@ async function refreshAccessToken(token){
         spotifyApi.setRefreshToken(token.refreshToken)
         const {body: refreshedToken} = await spotifyApi.refreshAccessToken()
 
-        //console.log("REFRESHED", refreshedToken)
-
         return {
             ...token,
             accessToken:refreshedToken.access_token,
@@ -58,7 +56,6 @@ export default NextAuth({
         }
 
         if(Date.now() < token.accessTokenExpires){
-            //console.log("TOKEN is valid")
             return token
         } 
 

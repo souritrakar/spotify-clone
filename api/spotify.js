@@ -4,6 +4,8 @@ const scopes = [
   "user-read-email",
   "playlist-read-private",
   "playlist-read-collaborative",
+  "playlist-modify",
+  "playlist-modify-private",
   "streaming",
   "user-read-private",
   "user-library-read",

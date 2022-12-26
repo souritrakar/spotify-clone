@@ -5,13 +5,13 @@ import timeConversion from "../hooks/timeConversion"
 import useSpotify from "../hooks/useSpotify"
 import SongRow from "./SongRow"
 import {shuffle} from "lodash"
-import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
 import Header from "./Header"
 import toast, { Toaster } from 'react-hot-toast'
 
 export default function Center(){
 
-    const {data:session} = useSession()
+    const router = useRouter()
     const spotifyAPI = useSpotify()
     const [playlistId, setPlaylistId] = useRecoilState(playlistIdState)
     const [playlist, setPlaylist] = useRecoilState(playlistState)
@@ -51,6 +51,17 @@ export default function Center(){
 
     }, [playlistId, spotifyAPI])
 
+    const unfollowPlaylist = (id) =>{
+        if(spotifyAPI.getAccessToken()){
+            spotifyAPI.unfollowPlaylist(id).then(()=>{
+                    toast('Playlist unfollowed!',{
+                        icon: '✔️',
+                      })
+                    router.reload()
+            })
+        }
+    }
+
     const copyPlaylistLink = (link) =>{
         navigator.clipboard.writeText(link).then(()=>{
             toast('Playlist link copied!',{
@@ -69,7 +80,7 @@ export default function Center(){
             <Header/>
 
             <div className="lg:ml-8 lg:mt-10 ml-4 mt-6 flex pb-4 text-white">
-                <img src={playlist?.images?.[0]?.url} className='lg:w-56 lg:h-56 md:w-48 md:h-48 w-32 h-32 shadow-xl rounded-xl' alt="Song"/>
+                <img src={playlist?.images?.[0]?.url ? playlist?.images[0]?.url : "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"} className='lg:w-56 lg:h-56 md:w-48 md:h-48 w-32 h-32 shadow-xl rounded-xl' alt="Song"/>
         
                 <div className="lg:ml-6 ml-2 lg:mt-4">
                     <h1 className="lg:text-7xl text-2xl md:text-5xl font-bold">{playlist?.name}</h1>
@@ -108,7 +119,7 @@ export default function Center(){
 
         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-content rounded-box w-52 text-white">
             <li><button onClick={()=>{copyPlaylistLink(playlist?.external_urls?.spotify.toString())}} className="hover:bg-gray-600">Copy link</button></li>
-            <li><a className="hover:bg-red-600">Delete playlist</a></li>
+            <li><button onClick={()=>{unfollowPlaylist(playlist?.id)}} className="hover:bg-red-600 ">Unfollow playlist</button></li>
         </ul>
         </div>
        

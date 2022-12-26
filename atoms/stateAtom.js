@@ -19,3 +19,13 @@ export const playbackState = atom({
     key:"playbackState",
     default:false
 })
+
+export const userPlaylists = atom({
+    key:"userPlaylists",
+    default:null
+})
+
+export const searchQueryState = atom({
+    key:"searchQueryState",
+    default:""
+})
